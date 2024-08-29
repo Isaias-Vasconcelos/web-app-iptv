@@ -2,6 +2,7 @@ import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Icon from "@mui/material/Icon";
 import Plataformas from "layouts/plataformas";
+import AdicionarPlataforma from "layouts/plataformas/add";
 
 const routes = [
   {
@@ -35,6 +36,13 @@ const routes = [
     icon: <Icon fontSize="small">stream</Icon>,
     route: "/plataformas",
     component: <Plataformas />,
+  },
+  {
+    name: "adicionar_plataforma",
+    key: "adicionar_plataforma",
+    icon: <Icon fontSize="small">stream</Icon>,
+    route: "/plataformas/adicionar",
+    component: <AdicionarPlataforma />,
   },
 ];
 

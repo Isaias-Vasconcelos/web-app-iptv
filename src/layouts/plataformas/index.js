@@ -5,7 +5,8 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import platformsTableData from "./data/platformsTableData";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
-import { Card } from "@mui/material";
+import MDButton from "components/MDButton";
+import { Card, Icon } from "@mui/material";
 
 function Plataformas() {
   const { columns, rows } = platformsTableData();
@@ -26,10 +27,16 @@ function Plataformas() {
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
               >
                 <MDTypography variant="h6" color="white">
                   Plataformas
                 </MDTypography>
+                <MDButton variant="contained" color="light" href="/plataformas/adicionar">
+                  <Icon>add</Icon>
+                </MDButton>
               </MDBox>
               <MDBox pt={3}>
                 <DataTable

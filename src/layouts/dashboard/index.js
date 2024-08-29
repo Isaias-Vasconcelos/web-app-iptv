@@ -42,6 +42,9 @@ function Dashboard() {
                 title="Plataformas"
                 description="Belong Interactive"
                 value={10}
+                action={{
+                  route: "/plataformas",
+                }}
               />
             </MDBox>
           </Grid>
