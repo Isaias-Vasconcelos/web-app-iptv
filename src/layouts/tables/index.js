@@ -17,8 +17,7 @@ import authorsTableData from "layouts/tables/data/authorsTableData";
 function Tables() {
   const { columns, rows } = authorsTableData();
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
+    <>
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
@@ -51,7 +50,7 @@ function Tables() {
         </Grid>
       </MDBox>
       <Footer />
-    </DashboardLayout>
+    </>
   );
 }
 

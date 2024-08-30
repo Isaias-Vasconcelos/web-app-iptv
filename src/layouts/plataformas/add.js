@@ -2,24 +2,25 @@ import MDAlert from "components/MDAlert";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "utils/backend";
 
 export default function AdicionarPlataforma() {
   const [photoUrl, setPhotoUrl] = useState("");
   const [platName, setPlatName] = useState("");
   const [isError, setIsError] = useState(false);
+  let navigate = useNavigate();
+
   async function Adicionar() {
-    api
+    await api
       .post("/api/v1/Platform", {
         name: platName,
         photoUrl: photoUrl,
       })
       .then((response) => {
         if (response.data.IS_OPERATION_SUCCESS) {
-          window.location.href = "/plataformas";
+          navigate(-1);
         } else {
           setIsError(true);
         }
@@ -27,8 +28,7 @@ export default function AdicionarPlataforma() {
       .catch((e) => {});
   }
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
+    <>
       {isError ?? (
         <MDAlert color="error" dismissible>
           Houve um erro ao adicionar uma nova plataforma
@@ -51,6 +51,6 @@ export default function AdicionarPlataforma() {
           Salvar
         </MDButton>
       </MDBox>
-    </DashboardLayout>
+    </>
   );
 }

@@ -1,22 +1,14 @@
 import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
-import platformsTableData from "./data/platformsTableData";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import MDButton from "components/MDButton";
 import { Card, Icon } from "@mui/material";
 import { Navigate, Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import moviesData from "./data/moviesData.js";
 
-function Plataformas() {
-  const { columns, rows } = platformsTableData();
-
-  const navigate = useNavigate();
-
-  function Adicionar() {
-    navigate("/plataformas/adicionar");
-  }
-
+export default function Movies() {
+  const { columns, rows } = moviesData();
   return (
     <MDBox pt={6} pb={3}>
       <Grid container spacing={6}>
@@ -36,7 +28,7 @@ function Plataformas() {
               alignItems="center"
             >
               <MDTypography variant="h6" color="white">
-                Plataformas
+                Filmes
               </MDTypography>
               <Link to="/plataformas/adicionar">
                 <MDButton variant="contained" color="light">
@@ -59,5 +51,3 @@ function Plataformas() {
     </MDBox>
   );
 }
-
-export default Plataformas;

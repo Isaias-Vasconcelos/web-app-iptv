@@ -3,6 +3,7 @@ import Tables from "layouts/tables";
 import Icon from "@mui/material/Icon";
 import Plataformas from "layouts/plataformas";
 import AdicionarPlataforma from "layouts/plataformas/add";
+import Movies from "layouts/movies";
 
 const routes = [
   {
@@ -15,11 +16,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "filmes",
-    key: "tables",
+    name: "movies",
+    key: "movies",
     icon: <Icon fontSize="small">movie_creation</Icon>,
-    route: "/tables",
-    component: <Tables />,
+    route: "/filmes",
+    component: <Movies />,
   },
   {
     type: "collapse",
