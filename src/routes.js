@@ -8,6 +8,7 @@ import AdicionarFilme from "layouts/movies/registerMovie";
 import Channels from "layouts/channels";
 import PlayerChannel from "layouts/channels/playerChannel";
 import AdicionarLista from "layouts/channels/adicionarLista";
+import Series from "layouts/series";
 
 const routes = [
   {
@@ -35,11 +36,18 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "séries",
-    key: "billing",
+    name: "series",
+    key: "series",
     icon: <Icon fontSize="small">all_inbox</Icon>,
-    route: "/billing",
-    component: <Plataformas />,
+    route: "/series",
+    component: <Series />,
+  },
+  {
+    name: "adicionar_series",
+    key: "adicionar_series",
+    icon: <Icon fontSize="small">all_inbox</Icon>,
+    route: "/series/adicionar",
+    component: <Series />,
   },
   {
     type: "collapse",
