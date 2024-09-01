@@ -4,6 +4,7 @@ import Icon from "@mui/material/Icon";
 import Plataformas from "layouts/plataformas";
 import AdicionarPlataforma from "layouts/plataformas/add";
 import Movies from "layouts/movies";
+import AdicionarFilme from "layouts/movies/registerMovie";
 
 const routes = [
   {
@@ -21,6 +22,13 @@ const routes = [
     icon: <Icon fontSize="small">movie_creation</Icon>,
     route: "/filmes",
     component: <Movies />,
+  },
+  {
+    name: "adicionar_filme",
+    key: "adicionar_filme",
+    icon: <Icon fontSize="small">movie_creation</Icon>,
+    route: "/filmes/adicionar",
+    component: <AdicionarFilme />,
   },
   {
     type: "collapse",

@@ -4,11 +4,12 @@ import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import MDButton from "components/MDButton";
 import { Card, Icon } from "@mui/material";
-import { Navigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import moviesData from "./data/moviesData.js";
 
 export default function Movies() {
   const { columns, rows } = moviesData();
+
   return (
     <MDBox pt={6} pb={3}>
       <Grid container spacing={6}>
@@ -30,7 +31,7 @@ export default function Movies() {
               <MDTypography variant="h6" color="white">
                 Filmes
               </MDTypography>
-              <Link to="/plataformas/adicionar">
+              <Link to="/filmes/adicionar">
                 <MDButton variant="contained" color="light">
                   <Icon>add</Icon>
                 </MDButton>
