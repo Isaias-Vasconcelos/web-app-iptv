@@ -5,6 +5,9 @@ import Plataformas from "layouts/plataformas";
 import AdicionarPlataforma from "layouts/plataformas/add";
 import Movies from "layouts/movies";
 import AdicionarFilme from "layouts/movies/registerMovie";
+import Channels from "layouts/channels";
+import PlayerChannel from "layouts/channels/playerChannel";
+import AdicionarLista from "layouts/channels/adicionarLista";
 
 const routes = [
   {
@@ -52,6 +55,26 @@ const routes = [
     icon: <Icon fontSize="small">stream</Icon>,
     route: "/plataformas/adicionar",
     component: <AdicionarPlataforma />,
+  },
+  {
+    type: "collapse",
+    name: "Canais",
+    key: "channels",
+    icon: <Icon fontSize="small">live_tv</Icon>,
+    route: "/canais",
+    component: <Channels />,
+  },
+  {
+    name: "play_channel",
+    key: "pl_channel",
+    route: "/canais/play/:tvg_name/:url",
+    component: <PlayerChannel />,
+  },
+  {
+    name: "add_channel",
+    key: "add_channel",
+    route: "/canais/adicionar",
+    component: <AdicionarLista />,
   },
 ];
 
