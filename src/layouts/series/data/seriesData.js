@@ -6,6 +6,7 @@ import MDBadge from "components/MDBadge";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import api from "utils/backend";
+import { Link } from "react-router-dom";
 
 const Serie = ({ image, nome }) => (
   <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -45,7 +46,21 @@ export default function SeriesData() {
       { Header: "Genêros", accessor: "generos", width: "45%", align: "left" },
     ],
     rows: series.map((series) => ({
-      serie: <Serie image={series.photoUrl} nome={series.title} />,
+      serie: (
+        <Link
+          to="/series/exibir"
+          state={{
+            id: series.id,
+            photoUrl: series.photoUrl,
+            title: series.title,
+            description: series.description,
+            platform: series.platform,
+            genders: series.genders,
+          }}
+        >
+          <Serie image={series.photoUrl} nome={series.title} />
+        </Link>
+      ),
       plataforma: <Plataforma image={series.platform.photoUrl} nome={series.platform.name} />,
       generos: (
         <MDBox ml={-1}>
@@ -65,6 +80,9 @@ export default function SeriesData() {
 }
 
 Serie.propTypes = {
+  id: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   nome: PropTypes.string.isRequired,
+  photoUrl: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
 };

@@ -9,6 +9,9 @@ import Channels from "layouts/channels";
 import PlayerChannel from "layouts/channels/playerChannel";
 import AdicionarLista from "layouts/channels/adicionarLista";
 import Series from "layouts/series";
+import AdicionarSerie from "layouts/series/registerSeries";
+import AdicionarEpisodio from "layouts/series/episodies/registerEpisodie";
+import ExibirSerie from "layouts/series/displaySeries";
 
 const routes = [
   {
@@ -47,7 +50,21 @@ const routes = [
     key: "adicionar_series",
     icon: <Icon fontSize="small">all_inbox</Icon>,
     route: "/series/adicionar",
-    component: <Series />,
+    component: <AdicionarSerie />,
+  },
+  {
+    name: "exibir_serie",
+    key: "exibir_serie",
+    icon: <Icon fontSize="small">all_inbox</Icon>,
+    route: "/series/exibir",
+    component: <ExibirSerie />,
+  },
+  {
+    name: "adicionar_episodios",
+    key: "adicionar_episodies",
+    icon: <Icon fontSize="small">all_inbox</Icon>,
+    route: "/series/episodios/adicionar",
+    component: <AdicionarEpisodio />,
   },
   {
     type: "collapse",
