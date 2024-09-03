@@ -56,6 +56,7 @@ export default function SeriesData() {
             description: series.description,
             platform: series.platform,
             genders: series.genders,
+            seasons: series.seasons,
           }}
         >
           <Serie image={series.photoUrl} nome={series.title} />
@@ -80,9 +81,6 @@ export default function SeriesData() {
 }
 
 Serie.propTypes = {
-  id: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   nome: PropTypes.string.isRequired,
-  photoUrl: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
 };

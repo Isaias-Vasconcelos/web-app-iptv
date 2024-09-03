@@ -3,11 +3,32 @@ import MDBox from "components/MDBox";
 import MDAvatar from "components/MDAvatar";
 import MDTypography from "components/MDTypography";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import api from "utils/backend";
 
 export default function ExibirSerie() {
   const location = useLocation();
-  const { id, photoUrl, title, description, platform, genders } = location.state;
+  const { id, photoUrl, title, description, platform, genders, seasons } = location.state;
+
+  const [seasonId, setSeasonId] = useState("");
+  const [seasonEpisodies, setSeasonEpisodies] = useState([]);
+
+  async function fetchSeasonEpisodies(event) {
+    const value = event.target.value;
+
+    await api
+      .get("api/v1/Episodie/season/" + value)
+      .then((response) => {
+        console.log(response.data);
+        setSeasonEpisodies([response.data.DATA_RESPONSE_LIST]);
+        console.log(seasonEpisodies);
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log(error.data);
+      });
+  }
 
   useEffect(() => {
     console.log(location.state);
@@ -33,7 +54,31 @@ export default function ExibirSerie() {
             <MDAvatar src={platform.photoUrl} sx={{ top: "-8px" }}></MDAvatar>
             <MDTypography>{platform.name}</MDTypography>
           </MDBox>
+          <MDTypography variant="body1" fontWeight="bold">
+            Gêneros:
+          </MDTypography>
+          <MDBox display="flex" justifyContent="space-between" gap="10px">
+            <MDTypography>
+              {genders.map((gender) => (
+                <div key={gender.id}>{gender.name}</div>
+              ))}
+            </MDTypography>
+          </MDBox>
         </MDBox>
+      </MDBox>
+      <MDBox display="flex" justifyContent="center" ml={-100} mt={-25}>
+        <FormControl required variant="outlined" fullWidth margin="normal">
+          <MDTypography variant="body1" fontWeight="bold">
+            Temporadas
+          </MDTypography>
+          <Select value={seasonId} onChange={(e) => fetchSeasonEpisodies(e)}>
+            {seasons.map((season) => (
+              <MenuItem key={season.id} value={season.id}>
+                {season.number}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </MDBox>
     </MDBox>
   );
