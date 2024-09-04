@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "utils/backend";
 import MDAlert from "components/MDAlert";
 import MDBox from "components/MDBox";
@@ -12,6 +12,9 @@ export default function AdicionarEpisodio() {
   const [episodieDescription, setDescription] = useState("");
   const [episodieUrl, setEpisodieUrl] = useState("");
   const [isError, setIsError] = useState(false);
+
+  const location = useLocation();
+  const { seasons } = location.state;
 
   const navigate = useNavigate();
 

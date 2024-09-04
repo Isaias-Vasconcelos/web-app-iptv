@@ -1,11 +1,20 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import MDBox from "components/MDBox";
 import MDAvatar from "components/MDAvatar";
 import MDTypography from "components/MDTypography";
-
 import { useEffect, useState } from "react";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  FormControl,
+  Icon,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import api from "utils/backend";
+import MDButton from "components/MDButton";
 
 export default function ExibirSerie() {
   const location = useLocation();
@@ -20,8 +29,7 @@ export default function ExibirSerie() {
     await api
       .get("api/v1/Episodie/season/" + value)
       .then((response) => {
-        console.log(response.data);
-        setSeasonEpisodies([response.data.DATA_RESPONSE_LIST]);
+        setSeasonEpisodies(response.data.DATA_RESPONSE_LIST);
         console.log(seasonEpisodies);
       })
       .catch((error) => {
@@ -80,18 +88,41 @@ export default function ExibirSerie() {
           </Select>
         </FormControl>
       </MDBox>
-      <MDBox display="flex" justifyContent="center" ml={-130}>
+      <MDBox
+        ml={-150}
+        mt={-7}
+        mb={7}
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <MDTypography variant="h6" color="black">
+          Adicionar novos episódios
+        </MDTypography>
+        <Link to="/series/episodios/adicionar" state={{ seasons: seasons }}>
+          <MDButton variant="contained" color="primary">
+            <Icon>add</Icon>
+          </MDButton>
+        </Link>
+      </MDBox>
+      <MDBox display="flex" justifyContent="center" ml={-100}>
         <MDTypography variant="body1" fontWeight="bold">
           Episódios:
         </MDTypography>
-        <MDBox display="flex" alignItems="center" lineHeight={1}>
-          <MDBox ml={1} lineHeight={1}>
-            <MDTypography display="block" variant="button" fontWeight="medium">
-              {seasonEpisodies.map((episodie) => (
-                <div key={episodie.id}>{episodie.title}</div>
-              ))}
-            </MDTypography>
-          </MDBox>
+        <MDBox>
+          {seasonEpisodies.map((episodie) => (
+            <Card key={episodie.id} sx={{ width: 400, height: "auto", mb: 2, ml: 2 }}>
+              <CardMedia sx={{ width: "auto", height: 10, fontSize: 14 }} fontWeight="bold">
+                {episodie.title}
+              </CardMedia>
+              <CardContent sx={{ flex: 1, overflow: "auto" }}>
+                <Typography variant="body2" color="textSecondary" ml={-1} fontSize={13}>
+                  {episodie.description}
+                </Typography>
+              </CardContent>
+            </Card>
+          ))}
         </MDBox>
       </MDBox>
     </MDBox>
