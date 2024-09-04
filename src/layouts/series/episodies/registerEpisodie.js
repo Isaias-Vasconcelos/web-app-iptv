@@ -5,6 +5,8 @@ import MDAlert from "components/MDAlert";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
+import { FormControl, MenuItem, Select } from "@mui/material";
+import MDTypography from "components/MDTypography";
 
 export default function AdicionarEpisodio() {
   const [episodieSeasonId, setSeasonId] = useState("");
@@ -52,12 +54,18 @@ export default function AdicionarEpisodio() {
         </MDAlert>
       )}
       <MDBox display="flex" flexDirection="column" gap={5} maxWidth={500}>
-        <MDInput
-          required
-          label="Informe a temporada do episódio"
-          value={episodieSeasonId}
-          onChange={(e) => setSeasonId(e.target.value)}
-        />
+        <FormControl required variant="outlined" fullWidth margin="normal">
+          <MDTypography variant="body2" fontWeight="bold">
+            Temporadas
+          </MDTypography>
+          <Select value={episodieSeasonId} onChange={(e) => setSeasonId(e.target.value)}>
+            {seasons.map((season) => (
+              <MenuItem key={season.id} value={season.id}>
+                {season.number}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <MDInput
           required
           label="Informe o título do episódio"
