@@ -80,6 +80,20 @@ export default function ExibirSerie() {
           </Select>
         </FormControl>
       </MDBox>
+      <MDBox display="flex" justifyContent="center" ml={-130}>
+        <MDTypography variant="body1" fontWeight="bold">
+          Episódios:
+        </MDTypography>
+        <MDBox display="flex" alignItems="center" lineHeight={1}>
+          <MDBox ml={1} lineHeight={1}>
+            <MDTypography display="block" variant="button" fontWeight="medium">
+              {seasonEpisodies.map((episodie) => (
+                <div key={episodie.id}>{episodie.title}</div>
+              ))}
+            </MDTypography>
+          </MDBox>
+        </MDBox>
+      </MDBox>
     </MDBox>
   );
 }
