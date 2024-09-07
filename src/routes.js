@@ -12,6 +12,8 @@ import Series from "layouts/series";
 import AdicionarSerie from "layouts/series/registerSeries";
 import AdicionarEpisodio from "layouts/series/episodies/registerEpisodie";
 import ExibirSerie from "layouts/series/displaySeries";
+import Genders from "layouts/genders";
+import AdicinarGenero from "layouts/genders/registerGender";
 
 const routes = [
   {
@@ -80,6 +82,21 @@ const routes = [
     icon: <Icon fontSize="small">stream</Icon>,
     route: "/plataformas/adicionar",
     component: <AdicionarPlataforma />,
+  },
+  {
+    type: "collapse",
+    name: "Gêneros",
+    key: "genders",
+    icon: <Icon fontSize="small">stream</Icon>,
+    route: "/generos",
+    component: <Genders />,
+  },
+  {
+    name: "adicionar_genero",
+    key: "adicionar_genero",
+    icon: <Icon fontSize="small">stream</Icon>,
+    route: "/generos/adicionar",
+    component: <AdicinarGenero />,
   },
   {
     type: "collapse",
