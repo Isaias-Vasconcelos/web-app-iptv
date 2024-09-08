@@ -5,6 +5,10 @@ import { column } from "stylis";
 import api from "utils/backend";
 import PropTypes from "prop-types";
 import MDAvatar from "components/MDAvatar";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import MDButton from "components/MDButton";
+import { Hidden, Icon, Input } from "@mui/material";
 
 const GendersAvatar = ({ name }) => (
   <MDBox display="flex" lineHeight={1}>
@@ -35,10 +39,59 @@ export default function GendersData() {
       });
   }
 
+  function removeGender(genderId) {
+    Swal.fire({
+      text: "Deseja excluir este item?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sim",
+    }).then((swalResult) => {
+      if (swalResult.isConfirmed) {
+        api
+          .delete("api/v1/Gender/" + genderId)
+          .then((response) => {
+            if (response.data.IS_OPERATION_SUCCESS === true) {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: response.data.MESSAGE,
+                showConfirmButton: false,
+                timer: 1500,
+              }).then(() => {
+                window.location.reload();
+              });
+            } else {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: response.data.MESSAGE,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            console.error(error.data);
+          });
+      }
+    });
+  }
+
   return {
-    columns: [{ Header: "Gênero", accessor: "gender", width: "45%", align: "left" }],
+    columns: [
+      { Header: "Gênero", accessor: "gender", width: "45%", align: "left" },
+      { Header: "Remover", accessor: "remove_button", width: "45%", align: "left" },
+    ],
     rows: genders.map((gender) => ({
       gender: <GendersAvatar name={gender.name} />,
+      remove_button: (
+        <MDButton variant="outlined" color="error" onClick={() => removeGender(gender.id)}>
+          <Icon>delete</Icon>
+        </MDButton>
+      ),
     })),
   };
 }
