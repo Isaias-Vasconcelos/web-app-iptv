@@ -14,6 +14,7 @@ import AdicionarEpisodio from "layouts/series/episodies/registerEpisodie";
 import ExibirSerie from "layouts/series/displaySeries";
 import Genders from "layouts/genders";
 import AdicinarGenero from "layouts/genders/registerGender";
+import AdicionarTemporada from "layouts/series/season/registerSeason";
 
 const routes = [
   {
@@ -67,6 +68,13 @@ const routes = [
     icon: <Icon fontSize="small">all_inbox</Icon>,
     route: "/series/episodios/adicionar",
     component: <AdicionarEpisodio />,
+  },
+  {
+    name: "adicionar_temporadas",
+    key: "adicionar_temporadas",
+    icon: <Icon fontSize="small">all_inbox</Icon>,
+    route: "/temporadas/adicionar",
+    component: <AdicionarTemporada />,
   },
   {
     type: "collapse",
