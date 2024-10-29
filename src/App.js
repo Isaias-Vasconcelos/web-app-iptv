@@ -1,7 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
@@ -54,13 +52,15 @@ export default function App() {
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
 
-  // Cache for the rtl
+  // Rotas onde a sidebar será ocultada
+  const hideSidebarRoutes = ["/sign-in", "/sign-up"];
+  const shouldHideSidebar = hideSidebarRoutes.includes(pathname);
+
+  // Cache para o RTL
   useMemo(() => {
     const cacheRtl = createCache({
-      key: "rtl",
-      stylisPlugins: [rtlPlugin],
+      key: "default", // Usar 'default' para LTR
     });
-
     setRtlCache(cacheRtl);
   }, []);
 
@@ -83,10 +83,10 @@ export default function App() {
   // Change the openConfigurator state
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
 
-  // Setting the dir attribute for the body element
+  // Setting the dir attribute for the body element to 'ltr'
   useEffect(() => {
-    document.body.setAttribute("dir", direction);
-  }, [direction]);
+    document.body.setAttribute("dir", "ltr"); // Altera para left-to-right
+  }, []);
 
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
@@ -118,7 +118,7 @@ export default function App() {
       shadow="sm"
       borderRadius="50%"
       position="fixed"
-      right="2rem"
+      right="2rem" // Muda para a direita para o botão de configuração
       bottom="2rem"
       zIndex={99}
       color="dark"
@@ -131,11 +131,11 @@ export default function App() {
     </MDBox>
   );
 
-  return direction === "rtl" ? (
+  return (
     <CacheProvider value={rtlCache}>
-      <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
+      <ThemeProvider theme={darkMode ? themeDark : theme}>
         <CssBaseline />
-        {layout === "dashboard" && (
+        {layout === "dashboard" && !shouldHideSidebar && (
           <>
             <Sidenav
               color={sidenavColor}
@@ -150,37 +150,21 @@ export default function App() {
           </>
         )}
         {layout === "vr" && <Configurator />}
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/painel" />} />
-        </Routes>
+        {!shouldHideSidebar ? ( // Renderiza o DashboardLayout apenas se não ocultar a barra lateral
+          <DashboardLayout>
+            <DashboardNavbar />
+            <Routes>
+              {getRoutes(routes)}
+              <Route path="*" element={<Navigate to="/painel" />} />
+            </Routes>
+          </DashboardLayout>
+        ) : (
+          <Routes>
+            {getRoutes(routes)}
+            <Route path="*" element={<Navigate to="/painel" />} />
+          </Routes>
+        )}
       </ThemeProvider>
     </CacheProvider>
-  ) : (
-    <ThemeProvider theme={darkMode ? themeDark : theme}>
-      <CssBaseline />
-      {layout === "dashboard" && (
-        <>
-          <Sidenav
-            color={sidenavColor}
-            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="AlphaTV"
-            routes={routes}
-            onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
-          />
-          <Configurator />
-          {configsButton}
-        </>
-      )}
-      {layout === "vr" && <Configurator />}
-      <DashboardLayout>
-        <DashboardNavbar />
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/painel" />} />
-        </Routes>
-      </DashboardLayout>
-    </ThemeProvider>
   );
 }
