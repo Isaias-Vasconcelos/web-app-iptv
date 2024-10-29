@@ -24,6 +24,7 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/painel",
     component: <Dashboard />,
+    protected: true,
   },
   {
     type: "collapse",
@@ -32,6 +33,7 @@ const routes = [
     icon: <Icon fontSize="small">movie_creation</Icon>,
     route: "/filmes",
     component: <Movies />,
+    protected: true,
   },
   {
     name: "adicionar_filme",
@@ -39,6 +41,7 @@ const routes = [
     icon: <Icon fontSize="small">movie_creation</Icon>,
     route: "/filmes/adicionar",
     component: <AdicionarFilme />,
+    protected: true,
   },
   {
     type: "collapse",
@@ -47,6 +50,7 @@ const routes = [
     icon: <Icon fontSize="small">all_inbox</Icon>,
     route: "/series",
     component: <Series />,
+    protected: true,
   },
   {
     name: "adicionar_series",
@@ -54,6 +58,7 @@ const routes = [
     icon: <Icon fontSize="small">all_inbox</Icon>,
     route: "/series/adicionar",
     component: <AdicionarSerie />,
+    protected: true,
   },
   {
     name: "exibir_serie",
@@ -61,6 +66,7 @@ const routes = [
     icon: <Icon fontSize="small">all_inbox</Icon>,
     route: "/series/exibir",
     component: <ExibirSerie />,
+    protected: true,
   },
   {
     name: "adicionar_episodios",
@@ -68,6 +74,7 @@ const routes = [
     icon: <Icon fontSize="small">all_inbox</Icon>,
     route: "/series/episodios/adicionar",
     component: <AdicionarEpisodio />,
+    protected: true,
   },
   {
     name: "adicionar_temporadas",
@@ -75,6 +82,7 @@ const routes = [
     icon: <Icon fontSize="small">all_inbox</Icon>,
     route: "/temporadas/adicionar",
     component: <AdicionarTemporada />,
+    protected: true,
   },
   {
     type: "collapse",
@@ -83,6 +91,7 @@ const routes = [
     icon: <Icon fontSize="small">stream</Icon>,
     route: "/plataformas",
     component: <Plataformas />,
+    protected: true,
   },
   {
     name: "adicionar_plataforma",
@@ -90,6 +99,7 @@ const routes = [
     icon: <Icon fontSize="small">stream</Icon>,
     route: "/plataformas/adicionar",
     component: <AdicionarPlataforma />,
+    protected: true,
   },
   {
     type: "collapse",
@@ -98,6 +108,7 @@ const routes = [
     icon: <Icon fontSize="small">stream</Icon>,
     route: "/generos",
     component: <Genders />,
+    protected: true,
   },
   {
     name: "adicionar_genero",
@@ -105,6 +116,7 @@ const routes = [
     icon: <Icon fontSize="small">stream</Icon>,
     route: "/generos/adicionar",
     component: <AdicinarGenero />,
+    protected: true,
   },
   {
     type: "collapse",
@@ -113,18 +125,21 @@ const routes = [
     icon: <Icon fontSize="small">live_tv</Icon>,
     route: "/canais",
     component: <Channels />,
+    protected: true,
   },
   {
     name: "play_channel",
     key: "pl_channel",
     route: "/canais/play/:tvg_name/:url",
     component: <PlayerChannel />,
+    protected: true,
   },
   {
     name: "add_channel",
     key: "add_channel",
     route: "/canais/adicionar",
     component: <AdicionarLista />,
+    protected: true,
   },
 ];
 

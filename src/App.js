@@ -15,14 +15,9 @@ import Configurator from "examples/Configurator";
 
 // Material Dashboard 2 React themes
 import theme from "assets/theme";
-import themeRTL from "assets/theme/theme-rtl";
-
-// Material Dashboard 2 React Dark Mode themes
 import themeDark from "assets/theme-dark";
-import themeDarkRTL from "assets/theme-dark/theme-rtl";
 
 // RTL plugins
-import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
@@ -37,22 +32,15 @@ import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import { useAuth, AuthProvider } from "utils/Auth/AuthContext";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
-  const {
-    miniSidenav,
-    direction,
-    layout,
-    openConfigurator,
-    sidenavColor,
-    transparentSidenav,
-    whiteSidenav,
-    darkMode,
-  } = controller;
+  const { miniSidenav, layout, sidenavColor, transparentSidenav, whiteSidenav, darkMode } =
+    controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
-  const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
+  const { isAuthenticated } = useAuth();
 
   // Cache for the rtl
   useMemo(() => {
@@ -101,7 +89,15 @@ export default function App() {
       }
 
       if (route.route) {
-        return <Route exact path={route.route} element={route.component} key={route.key} />;
+        return route.protected ? (
+          <Route
+            path={route.route}
+            element={isAuthenticated ? Component : <Navigate to="/sign-in" replace />}
+            key={route.key}
+          />
+        ) : (
+          <Route path={route.route} element={route.component} key={route.key} />
+        );
       }
 
       return null;
