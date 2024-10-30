@@ -15,8 +15,17 @@ import ExibirSerie from "layouts/series/displaySeries";
 import Genders from "layouts/genders";
 import AdicinarGenero from "layouts/genders/registerGender";
 import AdicionarTemporada from "layouts/series/season/registerSeason";
+import Users from "layouts/users";
+import Basic from "layouts/authentication/sign-in";
+import AdicionarUsuario from "layouts/users/registerUser";
 
 const routes = [
+  {
+    name: "sign-in",
+    key: "sign-in",
+    route: "/sign-in",
+    component: <Basic />,
+  },
   {
     type: "collapse",
     name: "Painel",
@@ -25,6 +34,21 @@ const routes = [
     route: "/painel",
     component: <Dashboard />,
     protected: true,
+  },
+  {
+    type: "collapse",
+    name: "users",
+    key: "users",
+    icon: <Icon fontSize="small">stream</Icon>,
+    route: "/users",
+    component: <Users />,
+  },
+  {
+    name: "adicionar_usuario",
+    key: "adicionar_usuario",
+    icon: <Icon fontSize="small">stream</Icon>,
+    route: "/users/adicionar",
+    component: <AdicionarUsuario />,
   },
   {
     type: "collapse",
