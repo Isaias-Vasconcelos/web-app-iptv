@@ -25,6 +25,7 @@ const routes = [
     key: "sign-in",
     route: "/sign-in",
     component: <Basic />,
+    protected: false,
   },
   {
     type: "collapse",
@@ -42,6 +43,7 @@ const routes = [
     icon: <Icon fontSize="small">stream</Icon>,
     route: "/users",
     component: <Users />,
+    protected: true,
   },
   {
     name: "adicionar_usuario",
@@ -49,6 +51,7 @@ const routes = [
     icon: <Icon fontSize="small">stream</Icon>,
     route: "/users/adicionar",
     component: <AdicionarUsuario />,
+    protected: true,
   },
   {
     type: "collapse",

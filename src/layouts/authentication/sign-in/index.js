@@ -18,6 +18,7 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import api from "utils/backend";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { useAuth } from "utils/Auth/AuthContext";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -26,6 +27,8 @@ function Basic() {
   const [password, setPassword] = useState("");
 
   const navigator = useNavigate();
+
+  const { authenticate } = useAuth();
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -39,6 +42,7 @@ function Basic() {
         console.log(response.data);
         Cookies.set("token", response.data.token, { expires: 1, path: "/", secure: true });
         setUserRoleCookie(response.data.token);
+        authenticate();
         navigator("/painel");
       })
       .catch((e) => console.log(e));

@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
@@ -31,17 +31,23 @@ import brandDark from "assets/images/logo-ct-dark.png";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { useAuth, AuthProvider } from "utils/Auth/AuthContext";
+import MDButton from "components/MDButton";
+import Cookies from "js-cookie";
+import MDTypography from "components/MDTypography";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, layout, sidenavColor, transparentSidenav, whiteSidenav, darkMode } =
     controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
+  const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
+
+  const navigate = useNavigate();
 
   // Rotas onde a sidebar será ocultada
-  const hideSidebarRoutes = ["/sign-in", "/sign-up"];
+  const hideSidebarRoutes = ["/sign-in"];
   const shouldHideSidebar = hideSidebarRoutes.includes(pathname);
 
   // Cache para o RTL
@@ -92,7 +98,7 @@ export default function App() {
         return route.protected ? (
           <Route
             path={route.route}
-            element={isAuthenticated ? Component : <Navigate to="/sign-in" replace />}
+            element={isAuthenticated ? route.component : <Navigate to="/sign-in" replace />}
             key={route.key}
           />
         ) : (
@@ -102,6 +108,17 @@ export default function App() {
 
       return null;
     });
+
+  const logOut = () => {
+    logout();
+    removeCookies();
+    navigate("/sign-in");
+  };
+
+  const removeCookies = () => {
+    Cookies.remove("token");
+    Cookies.remove("user_role");
+  };
 
   const configsButton = (
     <MDBox
@@ -153,6 +170,9 @@ export default function App() {
               {getRoutes(routes)}
               <Route path="*" element={<Navigate to="/painel" />} />
             </Routes>
+            <MDButton Icon="logout" onClick={logOut}>
+              <MDTypography>SAIR DA CONTA</MDTypography>
+            </MDButton>
           </DashboardLayout>
         ) : (
           <Routes>
