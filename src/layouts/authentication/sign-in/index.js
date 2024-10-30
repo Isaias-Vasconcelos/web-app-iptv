@@ -19,18 +19,15 @@ import api from "utils/backend";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "utils/Auth/AuthContext";
+import Swal from "sweetalert2";
 
 function Basic() {
-  const [rememberMe, setRememberMe] = useState(false);
-
   const [userCode, setUserCode] = useState("");
   const [password, setPassword] = useState("");
 
   const navigator = useNavigate();
 
   const { isAuthenticated, authenticate } = useAuth();
-
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   const login = async () => {
     await api
@@ -41,16 +38,37 @@ function Basic() {
       .then((response) => {
         console.log(response.data);
         Cookies.set("token", response.data.token, { expires: 1, path: "/", secure: true });
-        setUserRoleCookie(response.data.token);
-        authenticate();
-        navigator("/painel");
+        if (validateUserRole(response.data.token)) {
+          authenticate();
+          navigator("/painel");
+        }
       })
       .catch((e) => console.log(e));
   };
 
-  const setUserRoleCookie = (token) => {
+  const validateUserRole = (token) => {
     const decodedToken = jwtDecode(token);
-    Cookies.set("user_role", decodedToken.role, { expires: 1, path: "/", secure: true });
+    const role = decodedToken.role;
+    if (role === "USER") {
+      showLoginPermissionError();
+      return false;
+    }
+    Cookies.set("user_role", role, { expires: 1, path: "/", secure: true });
+    return true;
+  };
+
+  const showLoginPermissionError = () => {
+    Swal.fire({
+      text: "Este tipo de usuário não é permitido no painel",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Ok",
+    }).then((swalResult) => {
+      if (swalResult.isConfirmed) {
+        window.location.reload();
+      }
+    });
   };
 
   return (
@@ -107,37 +125,10 @@ function Basic() {
                 fullWidth
               />
             </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Remember me
-              </MDTypography>
-            </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" onClick={login} fullWidth>
                 sign in
               </MDButton>
-            </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
-                Don&apos;t have an account?{" "}
-                <MDTypography
-                  component={Link}
-                  to="/sign-up"
-                  variant="button"
-                  color="info"
-                  fontWeight="medium"
-                  textGradient
-                >
-                  Sign up
-                </MDTypography>
-              </MDTypography>
             </MDBox>
           </MDBox>
         </MDBox>
