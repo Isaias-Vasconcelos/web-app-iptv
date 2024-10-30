@@ -42,7 +42,7 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, authenticate } = useAuth();
 
   const navigate = useNavigate();
 
@@ -79,14 +79,28 @@ export default function App() {
 
   // Setting the dir attribute for the body element to 'ltr'
   useEffect(() => {
-    document.body.setAttribute("dir", "ltr"); // Altera para left-to-right
+    document.body.setAttribute("dir", "ltr");
+    validatedIfTokenExists();
   }, []);
+
+  useEffect(() => {
+    navigate(pathname);
+  }, [isAuthenticated]);
 
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
+
+  const validatedIfTokenExists = () => {
+    const token = Cookies.get("token");
+    if (token) {
+      console.log("TOKEN EXISTE!!");
+      authenticate();
+      console.log(isAuthenticated);
+    }
+  };
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {

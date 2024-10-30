@@ -10,19 +10,6 @@ export const AuthProvider = ({ children }) => {
   const authenticate = () => setIsAuthenticated(true);
   const logout = () => setIsAuthenticated(false);
 
-  useEffect(() => {
-    validatedIfTokenExists();
-    console.log(isAuthenticated);
-  }, []);
-
-  const validatedIfTokenExists = () => {
-    const token = Cookies.get("token");
-    if (token.length > 0) {
-      setIsAuthenticated(true);
-      console.log(isAuthenticated);
-    } else logout();
-  };
-
   return (
     <AuthContext.Provider value={{ isAuthenticated, authenticate, logout }}>
       {children}

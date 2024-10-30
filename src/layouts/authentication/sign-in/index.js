@@ -28,7 +28,7 @@ function Basic() {
 
   const navigator = useNavigate();
 
-  const { authenticate } = useAuth();
+  const { isAuthenticated, authenticate } = useAuth();
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 

@@ -11,11 +11,11 @@ const container = document.getElementById("app");
 const root = createRoot(container);
 
 root.render(
-  <AuthProvider>
-    <BrowserRouter>
-      <MaterialUIControllerProvider>
+  <BrowserRouter>
+    <MaterialUIControllerProvider>
+      <AuthProvider>
         <App />
-      </MaterialUIControllerProvider>
-    </BrowserRouter>
-  </AuthProvider>
+      </AuthProvider>
+    </MaterialUIControllerProvider>
+  </BrowserRouter>
 );
